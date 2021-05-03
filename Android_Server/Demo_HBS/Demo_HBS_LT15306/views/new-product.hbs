@@ -1,0 +1,135 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h2>Add Product</h2>
+    </div>
+    <div class="col-sm-6 text-right">
+      <button type="button" class="btn btn-primary" onclick="goBack()">
+        Go back
+      </button>
+    </div>
+  </div>
+
+  <form action="/products/add-product" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="productName">Product Name:</label>
+      <input type="text" class="form-control" id="productName" 
+        onchange="validateProductName()" onkeyup="validateProductName()"
+        placeholder="Enter product name" name="productName" />
+      <p id="productError" class="alert alert-danger d-none"></p>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" class="form-control" id="price" min="0" max="100"
+        onchange="validateProductPrice()" onkeyup="validateProductPrice()"
+        placeholder="Enter price" name="price" />
+      <p id="priceError" class="alert alert-danger d-none"></p>
+    </div>
+    <div class="form-group">
+      <label for="published">Published:</label>
+      <input type="date" class="form-control" 
+        onchange="validateProductPublish()"
+      id="published" name="published" />
+      <p id="publishError" class="alert alert-danger d-none"></p>
+    </div>
+    <div class="form-group">
+      <label for="idLoaiSP">Category:</label>
+      <select class="form-control" id="idLoaiSP" name="idLoaiSP">
+        {{#each loaiSP}}
+        <option value="{{this._id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="img">Image:</label>
+      <input type="file" id="img" name="img" />
+    </div>
+    <div><img class="d-none" width="100" height="100" id="showImg" src="" alt=""></div>
+    <button id="btn" disabled type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<script>
+  var isProductNameValid = false, isProductPriceValid = false, isProductPublished = false
+  function validateProductName(){
+    let productName = document.getElementById('productName').value
+    if(!productName || productName.trim().length == 0 || productName.trim().length > 10){
+      document.getElementById('productError').innerText = 'Sai rồi kìa'
+      document.getElementById('productError').classList.remove('d-none')
+      isProductNameValid = false
+    }
+    else {
+      document.getElementById('productError').innerText = ''
+      document.getElementById('productError').classList.add('d-none')
+      isProductNameValid = true
+    }
+    validateForm()
+  }
+
+  function validateProductPrice(){
+    let price = document.getElementById('price').value
+    price = Number(price)
+    if(!price || price <= 0 || price > 100){
+      document.getElementById('priceError').innerText = 'Sai rồi kìa'
+      document.getElementById('priceError').classList.remove('d-none')
+      isProductPriceValid = false
+    }
+    else {
+      document.getElementById('priceError').innerText = ''
+      document.getElementById('priceError').classList.add('d-none')
+      isProductPriceValid = true
+    }
+    validateForm()
+  }
+
+  function validateProductPublish(){
+    let published = document.getElementById('published').value
+    let varDate = new Date(published)
+    let today = new Date()
+    today.setHours(0,0,0,0)
+    if(!published || varDate <= today){
+      document.getElementById('publishError').innerText = 'Sai rồi kìa'
+      document.getElementById('publishError').classList.remove('d-none')
+      isProductPublished = false
+    }
+    else {
+      document.getElementById('publishError').innerText = ''
+      document.getElementById('publishError').classList.add('d-none')
+      isProductPublished = true
+    }
+    validateForm()
+  }
+
+  function validateForm(){
+    if(isProductNameValid == false || isProductPriceValid == false 
+        || isProductPublished == false){
+      document.getElementById('btn').disabled = true
+    }
+    else {
+      document.getElementById('btn').disabled = false
+    }
+  }
+
+
+
+
+
+
+  function goBack() {
+    window.location.href = "/products";
+  }
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader()
+      reader.onload = function (e) {
+        $('#showImg').attr('src', e.target.result)
+        $('#showImg').removeClass('d-none')
+      }
+      reader.readAsDataURL(input.files[0])
+    }
+  }
+  $("#img").change(function () {
+    readURL(this)
+  })
+
+</script>

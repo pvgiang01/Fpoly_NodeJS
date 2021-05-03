@@ -1,0 +1,120 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Add Product</h2>
+        </div>
+        <div class="col-sm-6 text-right">
+            <button type="button" class="btn btn-primary" onclick="goBack()">Go back</button>
+        </div>
+    </div>
+    <form action="/products/add-product" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" class="form-control" onchange="validateProductName()" required
+            id="name" placeholder="Enter product name" name="name">
+            <p id="productNameError"></p>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" step="0.5" class="form-control" onchange="validateProductPrice()" required
+            id="price" placeholder="Enter price" name="price">
+            <p id="productPriceError"></p>
+        </div>
+        <div class="form-group">
+            <label for="available">Available:</label>
+            <input type="date" class="form-control" onchange="validateProductDate()" required
+            id="available" name="available">
+            <p id="productDateError"></p>
+        </div>
+        <div class="form-group">
+            <label for="idLoaiSP">Category</label>
+            <select class="form-control" id="idLoaiSP" name="idLoaiSP">
+                {{#each loaiSP}}
+                <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="img">Image:</label>
+            <input type="file" class="form-control" id="img" name="img">
+        </div>
+        <div><img class="d-none" width="100" height="100" src="" alt="" id="showImg"></div>    
+        <button disabled id="btn" type="submit" class="btn btn-primary">Submit</button>
+    </form>    
+</div>
+<script>
+    var isNameValid = false, isPriceValid = false, isDateValid = false
+
+    function validateProductName () {
+        let value = document.getElementById('name').value
+        if(!value || value.length === 0 || value.length > 100){
+            document.getElementById('productNameError').innerText = 'Product name error'
+            isNameValid = false
+        }
+        else {
+            document.getElementById('productNameError').innerText = ''
+            isNameValid = true            
+        }
+        validateForm()
+    }
+
+    function validateProductPrice () {
+        let value = document.getElementById('price').value
+        value = Number(value)
+        if(!value || value < 0 || value > 1000000000){
+            document.getElementById('productPriceError').innerText = 'Product price error'
+            isPriceValid = false
+        }
+        else {
+            document.getElementById('productPriceError').innerText = ''
+            isPriceValid = true            
+        }
+        validateForm()
+    }
+
+    function validateProductDate(){
+        let date = document.getElementById('available').value
+        var varDate = new Date(date)
+        var today = new Date()
+        today.setHours(0,0,0,0)
+
+        if(!varDate || varDate <= today){
+            document.getElementById('productDateError').innerText = 'Product available error'
+            isDateValid = false
+        }
+        else {
+            document.getElementById('productDateError').innerText = ''
+            isDateValid = true            
+        }
+        validateForm()
+    }
+
+    function validateForm(){
+        if(isDateValid == false || isNameValid == false || isPriceValid == false){
+            document.getElementById('btn').disabled = true
+        }
+        else{
+            document.getElementById('btn').disabled = false
+        }
+    }
+
+
+
+    function goBack() {
+        window.location.href = '/products'
+    }
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader()
+            reader.onload = function (e) {
+                $('#showImg').attr('src', e.target.result)
+                $('#showImg').removeClass('d-none');
+            }
+            reader.readAsDataURL(input.files[0])
+        }
+    }
+    $("#img").change(function () {
+        readURL(this)
+    })
+
+</script>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Danhsach</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>Product list</h2>
+        </div>
+        <div class="col-sm-6 text-right">
+          <button type="button" class="btn btn-primary" 
+            onclick="goToAddNew()">Add new</button>
+        </div>
+      </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Date</th>
+            <th>Category</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% list.forEach(v => { %>
+            <tr>
+              <td><%= v.id%></td>
+              <td><%= v.name%></td>
+              <td><%= v.price%></td>
+              <td><%= v.available%></td>
+              <td><%= loaiSP.find(loai => loai.id == v.idLoaiSP).name %></td>
+              <td class="text-right">
+                <button type="button" class="btn btn-success"
+                  onclick="goToEdit('<%=v.id%>')">Edit</button>
+                <button type="button" class="btn btn-danger"
+                  onclick="deleteProduct('<%=v.id%>')">Remove</button>
+              </td>
+            </tr>
+          <%}) %>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function goToAddNew(){
+        window.location.href = '/products/add-product'
+      }
+
+      function goToEdit(id){
+        window.location.href = '/products/edit-product/' + id
+      }
+
+      function deleteProduct(id) {
+        $.ajax({
+          type: "DELETE",
+          url: '/products/delete/' + id,
+          success: function(data)
+          {   
+            if(data.res == true){
+              window.location.href='/products'
+            }                
+          }
+        }); 
+      }
+
+      
+
+
+    </script>
+
+  </body>
+</html>

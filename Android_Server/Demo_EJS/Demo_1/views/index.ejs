@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <h1><%= title %></h1>
+      List of programming languages
+      <ul>
+          <% list.forEach(function(item) { %>
+        <li onclick="handleUpdateProduct('<%= item.id %>')"><%= item.name %></li>
+          <% }); %>
+      </ul>
+      <a href="/new/new" class="btn btn-success float-right">Add Product</a>
+    </main>
+    <script>
+      function handleUpdateProduct(id) {
+          $(location).attr('href', '/' + id);
+      }
+  </script>
+  </body>
+</html>

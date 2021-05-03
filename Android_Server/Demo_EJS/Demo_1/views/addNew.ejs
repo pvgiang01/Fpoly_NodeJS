@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </head>
+  <body>
+      <div class="container">
+        <h2>Add new</h2>
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label>Product name</label>
+                <input class="form-control" type="text" name='name'>
+            </div>
+            <input id="update-btn" class="btn btn-primary" type="submit" value="SAVE">
+        </form>
+      </div>
+  </body>
+</html>

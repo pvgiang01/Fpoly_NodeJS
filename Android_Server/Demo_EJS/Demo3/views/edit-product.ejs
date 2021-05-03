@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>Edit Product</h2>
+        </div>
+        <div class="col-sm-6 text-right">
+          <button type="button" class="btn btn-primary"
+            onclick="goBack()">Go back</button>
+        </div>
+      </div>
+
+
+
+
+      <form action="/products/edit-product/<%=product.id%>" method="POST">
+        <div class="form-group">
+          <label for="name">Product Name:</label>
+          <input type="text" class="form-control" id="name" 
+            placeholder="Enter product name" name="name" 
+            value="<%=product.name%>">
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" class="form-control" id="price" 
+            placeholder="Enter price" name="price"
+            value="<%=product.price%>">
+        </div>
+        <div class="form-group">
+            <label for="available">Available:</label>
+            <input type="date" class="form-control" id="available" 
+                 name="available" value="<%=product.available%>">
+        </div>
+
+        <div class="form-group">
+          <label for="idLoaiSP">Category</label>
+          <select class="form-control" id="idLoaiSP" name="idLoaiSP">
+            <%loaiSP.forEach(loai => {%> 
+              <% if(loai.id == product.idLoaiSP){ %>
+                  <option selected value="<%=loai.id%>"><%=loai.name%></option>
+                <% } else{ %>  
+                  <option value="<%=loai.id%>"><%=loai.name%></option>
+                <% } %>             
+            <%})%>
+          </select>          
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      
+    </div>
+
+    <script>
+        function goBack(){
+            window.location.href = '/products'
+        }
+    </script>
+
+  </body>
+</html>

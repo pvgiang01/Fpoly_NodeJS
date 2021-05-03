@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product list</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="container">
+
+
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>Product List</h2>
+        </div>
+        <div class="col-sm-6 text-right">
+          <button type="button" class="btn btn-primary"
+            onclick="goToNewProduct()">Add New</button>
+        </div>
+      </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="filter" 
+            placeholder="Enter product name" name="filter" onkeyup="filter()">
+        </div>
+
+
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Published</th>
+            <th>Category</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tblBody">
+          <% list.forEach(val => {%>            
+            <tr>
+              <td><%= val.id%></td>
+              <td><%= val.productName%></td>
+              <td><%= val.price%></td>
+              <td><%= val.published%></td>   
+              <td><%= loaiSP.find(sp => sp.id == val.idLoaiSP).name || ''%></td>   
+              <td class="text-right">
+                <button type="button" class="btn btn-warning" 
+                  onclick="goToEditProduct('<%=val.id%>')">Edit</button>
+                <button type="button" class="btn btn-danger">Remove</button>
+              </td>           
+            </tr>            
+            <% })%>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function goToNewProduct(){
+        window.location.href ='/products/add-product'
+      }
+
+      function goToEditProduct(id){
+        window.location.href ='/products/edit-product/'+id
+      }
+      function filter(){
+        let val = document.getElementById('filter').value || 'all'
+        
+        $.ajax({
+          type: "GET",
+          url: '/products/filter/' + val,
+          success: function(res)
+          {   
+              let {pros, loaiSP} = res
+              let body = document.getElementById('tblBody')
+              body.innerHTML = ''
+              let s = ''
+              pros.map(pro => {
+                s+= '<tr>'
+                s += '<td>'+pro.id+'</td>'
+                s += '<td>'+pro.productName+'</td>'
+                s += '<td>'+pro.price+'</td>'
+                s += '<td>'+pro.published+'</td>'
+                s += '<td>'+loaiSP.find(sp => sp.id == pro.idLoaiSP).name || ''+'</td>'
+                s += '<td class="text-right">'
+                s += '<button type="button" class="btn btn-warning" onclick="goToEditProduct('+pro.id+')">Edit</button>'
+                s += '<button type="button" class="btn btn-danger" >Remove</button>'
+                s += '</td>'
+                s += '</tr>'
+                body.innerHTML +=s
+                s=''
+              })
+          }
+        });       
+      }
+
+
+    </script>
+
+
+
+  </body>
+</html>
