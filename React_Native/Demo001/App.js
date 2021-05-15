@@ -1,10 +1,21 @@
+import React, {useState} from 'react';
+import {SafeAreaView,Text,} from 'react-native';
+import Hello from './components/hello'
 
+const App = () => {
+  const [name, setName] = useState('Nguyễn Văn A')
+  const xuLySuKienBienName = (new_name) => {
+    setName(new_name)
+  }
+  return (
+    <SafeAreaView >
+      <Text>{name}</Text>
+      <Hello prop_name={name} suKien={xuLySuKienBienName}/>
+    </SafeAreaView>
+  );
+};
 
-import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-} from 'react-native';
+export default App;
 
 
 // ES6
@@ -12,13 +23,9 @@ import {
 // react-native run-android
 // npx react-native run-android
 
-const App = () => {
+// component
+// function component, class component
 
-  return (
-    <SafeAreaView >
-      <Text>PS12345 Nguyen van A</Text>
-    </SafeAreaView>
-  );
-};
 
-export default App;
+// properties: props -->> không thay đổi
+// state ->>> của riêng component, có thể thay đổi
