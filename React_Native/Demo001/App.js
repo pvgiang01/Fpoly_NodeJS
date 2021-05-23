@@ -8,10 +8,8 @@ const App = () => {
     setName(new_name)
   }
   return (
-    <SafeAreaView >
-      <Text>{name}</Text>
-      <Hello prop_name={name} suKien={xuLySuKienBienName}/>
-    </SafeAreaView>
+    <Hello prop_name={name} suKien={xuLySuKienBienName}>
+      </Hello>
   );
 };
 
