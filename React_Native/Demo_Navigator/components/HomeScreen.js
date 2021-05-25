@@ -1,7 +1,7 @@
 
 import * as React from 'react'
 
-import { Button } from 'react-native'
+import { Button, StyleSheet } from 'react-native'
 
 
 
@@ -11,12 +11,24 @@ const HomeScreen = (props) => {
     return (
         <>
             <Button 
+                style={styles.button}
                 title="Go to Hello Screen"
                 onPress={() => navigate('HelloScreen', myParams)}
             />
             <Button
+                style={styles.button}
                 title="Go to FlatList Screen"
                 onPress={() => navigate('FlatListScreen')}
+            />
+            <Button
+                style={styles.button}
+                title="Go to Lab 3"
+                onPress={() => navigate('Lab3')}
+            />
+            <Button
+                style={styles.button}
+                title="Go to Image Screen"
+                onPress={() => navigate('ImageScreen')}
             />
         </>
     )
@@ -24,3 +36,8 @@ const HomeScreen = (props) => {
 
 export default HomeScreen
 
+const styles = StyleSheet.create({
+    button:{
+        marginBottom: 30
+    }
+})

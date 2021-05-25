@@ -24,7 +24,7 @@ const renderItem = (props) => {
     console.log(props)
     return (
         <View>
-            <Text>{name}</Text>
+            <Text style={styles.item}>{name}</Text>
         </View>
     )    
 }
@@ -40,3 +40,11 @@ const MyFlatList = () => {
 }
 
 export default MyFlatList
+
+const styles = StyleSheet.create({
+    item:{
+        backgroundColor: 'red',
+        color: 'white',
+        fontSize: 30
+    }
+})
