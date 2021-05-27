@@ -10,7 +10,7 @@ import {Text, StyleSheet, ScrollView} from 'react-native'
 const ScrollViewScreen = () => {
     return (
         <ScrollView>
-            <Text onPress={} style={{fontSize: 50}}>Nguyễn Văn A</Text>
+            <Text style={{fontSize: 50}}>Nguyễn Văn A</Text>
             <Text style={{fontSize: 50}}>Nguyễn Văn A</Text>
             <Text style={{fontSize: 50}}>Nguyễn Văn A</Text>
             <Text style={{fontSize: 50}}>Nguyễn Văn A</Text>

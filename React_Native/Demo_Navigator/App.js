@@ -10,6 +10,9 @@ import FlatListScreen from './components/FlatListScreen'
 import Lab3 from './components/Lab3'
 import ImageScreen from './components/ImageScreen'
 import ScollViewScreen from './components/ScrollViewScreen'
+import FetchDataScreen from './components/FetchDataScreen'
+import ButtonScreen from './components/ButtonScreen'
+import DetailScreen from './components/DetailScreen'
 
 
 const Stack = createStackNavigator()
@@ -18,8 +21,11 @@ const Stack = createStackNavigator()
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ScollViewScreen">
+      <Stack.Navigator initialRouteName="FetchDataScreen">
+        <Stack.Screen name="DetailScreen" component={DetailScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="ButtonScreen" component={ButtonScreen} />
+        <Stack.Screen name="FetchDataScreen" component={FetchDataScreen} />
         <Stack.Screen name="HelloScreen" component={HelloScreen} />
         <Stack.Screen name="FlatListScreen" component={FlatListScreen} />
         <Stack.Screen name="Lab3" component={Lab3} />
