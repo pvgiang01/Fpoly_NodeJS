@@ -2,12 +2,12 @@
 
 
 import React, {useState, useEffect} from 'react'
-import {Text, Image, StyleSheet, View, FlatList} from 'react-native'
+import {Text, Image, StyleSheet, View, FlatList, Button} from 'react-native'
 
 
 
 const DetailScreen = props => {
-    const {route:{params}} = props
+    const {navigation, route:{params}} = props
 
     const [post, setPost] = useState(null)
     
@@ -29,6 +29,9 @@ const DetailScreen = props => {
                 source={{uri: post.avatar}}
             />
             <Text style={styles.item}>{post.content}</Text>
+            <Button 
+            title='Add New'
+            onPress={() => navigation.navigate('AddNewScreen')}/>
         </View>
     )
 }

@@ -4,15 +4,17 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeScreen from './components/HomeScreen'
-import HelloScreen from './components/HelloScreen'
-import FlatListScreen from './components/FlatListScreen'
-import Lab3 from './components/Lab3'
-import ImageScreen from './components/ImageScreen'
-import ScollViewScreen from './components/ScrollViewScreen'
-import FetchDataScreen from './components/FetchDataScreen'
-import ButtonScreen from './components/ButtonScreen'
-import DetailScreen from './components/DetailScreen'
+import HomeScreen from './screens/HomeScreen'
+import HelloScreen from './screens/HelloScreen'
+import FlatListScreen from './screens/FlatListScreen'
+import Lab3 from './screens/Lab3'
+import ImageScreen from './screens/ImageScreen'
+import ScollViewScreen from './screens/ScrollViewScreen'
+import FetchDataScreen from './screens/FetchDataScreen'
+import ButtonScreen from './screens/ButtonScreen'
+import DetailScreen from './screens/DetailScreen'
+import AnimationScreen from './screens/AnimationScreen'
+import AddNewScreen from './screens/AddNewScreen'
 
 
 const Stack = createStackNavigator()
@@ -23,6 +25,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="FetchDataScreen">
         <Stack.Screen name="DetailScreen" component={DetailScreen} />
+        <Stack.Screen name="AddNewScreen" component={AddNewScreen} />
+        <Stack.Screen name="AnimationScreen" component={AnimationScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="ButtonScreen" component={ButtonScreen} />
         <Stack.Screen name="FetchDataScreen" component={FetchDataScreen} />
