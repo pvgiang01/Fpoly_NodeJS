@@ -3,26 +3,31 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Platform, Image, Text, View, ActivityIndicator } from 'react-native'
 import firebase from '../utilities/firebaseDB'
 
-const Loading = props => {
-    const {navigation} = props
+import Home from './Home'
+import SignUp from './SignUp'
 
+
+
+const Loading = props => {
+    const { navigation } = props
+    const [isAuth, setIsAuth] = useState(false)
     useEffect(() => {
         const subs = firebase.auth()
-                        .onAuthStateChanged(user => {
-                            console.log('>>>>>>>>', user)
-                            const scr = user ? 'Home' : 'SignUp'
-                            console.log('>>>>>>>>', scr)
-                            navigation.navigate(scr)
-                        })
+            .onAuthStateChanged(user => {
+                if (user) {
+                    setIsAuth(true)
+                }
+            })
         return subs
-    }, [])
+    }, [isAuth])
 
-    return (
-        <View>
-            <Text>Loading</Text>
-            <ActivityIndicator size='large'/>
-        </View>
-    )
+
+    if (isAuth) {
+        return <Home />
+    } else {
+        return <SignUp {...navigation} />
+    }
+
 }
 
 export default Loading
