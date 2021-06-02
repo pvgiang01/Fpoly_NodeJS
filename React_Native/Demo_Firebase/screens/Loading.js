@@ -21,9 +21,10 @@ const Loading = props => {
         return subs
     }, [isAuth])
 
+    // spread operator
 
     if (isAuth) {
-        return <Home />
+        return <Home navigation={navigation}/>
     } else {
         return <SignUp {...navigation} />
     }

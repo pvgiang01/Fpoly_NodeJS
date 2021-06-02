@@ -14,9 +14,9 @@ const SignUp = props => {
 
     const handleSignUp = () => {
         firebase.auth()
-                .createUserWithEmailAndPassword(email, password)
-                .then(() => navigation.navigate('Home'))
-                .catch(error => setErr(error.message))
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => navigation.navigate('Home'))
+            .catch(error => setErr(error.message))
     }
 
     return (
