@@ -42,7 +42,7 @@ const Home = props => {
         <View style={{backgroundColor: 'red', marginBottom: 20}}>
             <Pressable onPress={() => navigation.navigate('Details', {key: item.key})}>
                 <Text>{item.title}</Text>
-                <Text>{new Date(item.body.toDate()).toDateString()}</Text>
+                <Text>{item.body}</Text>
             </Pressable>
         </View>
     )
