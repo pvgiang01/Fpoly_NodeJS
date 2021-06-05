@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, FlatList, Pressable,
-     Platform, Image, Text, View } from 'react-native'
+     Platform, Image, Text, View, ActivityIndicator } from 'react-native'
 import firebase from '../utilities/firebaseDB'
 
 
@@ -34,8 +34,9 @@ const Home = props => {
     }
 
     if (data.length == 0) {
-        return (<></>)
+        return (<><ActivityIndicator /></>)
     }
+
 
     
     const renderItem = ({ item }) => (        
