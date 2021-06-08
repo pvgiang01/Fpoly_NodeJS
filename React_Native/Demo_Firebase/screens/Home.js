@@ -7,7 +7,7 @@ import firebase from '../utilities/firebaseDB'
 
 
 const Home = props => {
-    const {navigation} = props
+    const {navigation, setIsAuth} = props
 
     const [user, setUser] = useState(null)
     const [data, setData] = useState([])
@@ -37,11 +37,11 @@ const Home = props => {
         return (<><ActivityIndicator /></>)
     }
 
-
+    console.log('>>>',setIsAuth)
     
     const renderItem = ({ item }) => (        
         <View style={{backgroundColor: 'red', marginBottom: 20}}>
-            <Pressable onPress={() => navigation.navigate('Details', {key: item.key})}>
+            <Pressable onPress={() => navigation.navigate('Details', {key: item.key, setIsAuth})}>
                 <Text>{item.title}</Text>
                 <Text>{item.body}</Text>
             </Pressable>
