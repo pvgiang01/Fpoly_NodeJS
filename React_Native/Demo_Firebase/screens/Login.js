@@ -5,24 +5,23 @@ import { StyleSheet, TextInput, Platform, Image, Text, View, Pressable } from 'r
 import firebase from '../utilities/firebaseDB'
 
 const Login = props => {
-    const {navigation, route:{params: {setIsAuth}}} = props
+    const { navigation } = props
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errMsg, setErrMsg] = useState(null)
 
     const handleLogin = () => {
         firebase.auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(res => {
-            setIsAuth(true)
-            navigation.navigate('Loading')
-        })
-        .catch(err => setErrMsg('Login failed'))
+            .signInWithEmailAndPassword(email, password)
+            .then(res => {                
+                navigation.navigate('Loading', { isLoggedIn: true })
+            })
+            .catch(err => setErrMsg('Login failed'))
     }
 
-    return(
+    return (
         <View>
-            <TextInput 
+            <TextInput
                 placeholder='Email'
                 value={email}
                 onChangeText={setEmail}
@@ -37,7 +36,7 @@ const Login = props => {
                 <Text>Sign in</Text>
             </Pressable>
             {
-                errMsg && <Text style={{color: 'red', fontSize: 30}}>{errMsg}</Text>
+                errMsg && <Text style={{ color: 'red', fontSize: 30 }}>{errMsg}</Text>
             }
         </View>
     )

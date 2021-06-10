@@ -7,7 +7,7 @@ import firebase from '../utilities/firebaseDB'
 
 const SignUp = props => {
 
-    const { navigation, setIsAuth } = props
+    const { navigation } = props
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [err, setErr] = useState(null)
@@ -16,8 +16,7 @@ const SignUp = props => {
         firebase.auth()
             .createUserWithEmailAndPassword(email, password)
             .then(() => {
-                setIsAuth(true) 
-                navigation.navigate('Loading')
+                navigation.navigate('Loading', {isLoggedIn: true})
             })
             .catch(error => setErr(error.message))
     }
@@ -36,7 +35,7 @@ const SignUp = props => {
                 onChangeText={setPassword}
             />
             <Button title='Sign Up' onPress={handleSignUp}/>
-            <Button title='Sign In' onPress={() => navigation.navigate('Login', {setIsAuth: setIsAuth})}/>
+            <Button title='Sign In' onPress={() => navigation.navigate('Login')}/>
             {
                 err && <Text style={{color: 'red', fontSize: 30}}>{err}</Text>
             }

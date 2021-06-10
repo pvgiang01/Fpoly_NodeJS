@@ -3,9 +3,10 @@ import React, { useState, useEffect, useCallback } from 'react'
 import firebase from '../utilities/firebaseDB'
 import Home from './Home'
 import SignUp from './SignUp'
+
 const Loading = props => {
-    const { navigation } = props
-    const [isAuth, setIsAuth] = useState(false)
+    const { navigation, route } = props
+    const [isAuth, setIsAuth] = useState(route?.params?.isLoggedIn || false)
     
     useEffect(() => {
         const subs = firebase.auth()
@@ -18,11 +19,10 @@ const Loading = props => {
         return subs
     }, [navigation])
 
-
     if (isAuth) {
-        return <Home navigation={navigation} setIsAuth={setIsAuth}/>
+        return <Home navigation={navigation} />
     } else {
-        return <SignUp navigation={navigation} setIsAuth={setIsAuth}/>
+        return <SignUp navigation={navigation} />
     }
 }
 
