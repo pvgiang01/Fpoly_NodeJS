@@ -46,8 +46,8 @@ const Details = props => {
             .collection('posts')
             .doc(key).get()
         if (res.exists) {
-            const { id, title, body } = res.data()
-            setPost({ id, title, body, key: res.id })
+            const {  title, body, createdAt } = res.data()
+            setPost({ title, body, createdAt, key: res.id })
             setTieuDe(title)
             setNoiDung(body)
         }
@@ -149,7 +149,9 @@ const Details = props => {
     if (!post) {
         return (<></>)
     }
-
+    // console.log(post)
+    const time = (new Date(post?.createdAt.toDate())).toDateString()
+    // console.log(time)
     return (
         <>
             <View style={styles.buttons}>
@@ -169,8 +171,10 @@ const Details = props => {
                 }
                 style={{padding: 30}}
             >
+                <MyText>Body: {time}</MyText>
                 <MyText>Title: {post.title}</MyText>
                 <MyText>Body: {post.body}</MyText>
+                
             </ScrollView>
             <Modal
                 animationType='slide'

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import {
     ActivityIndicator, View, FlatList,
-    Pressable, Text, Modal, TextInput
+    Pressable, Text, Modal, TextInput, Image
 } from 'react-native'
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 import firebase from '../database/config'
 
@@ -50,20 +51,64 @@ const Home = props => {
         setTitle(null)
     }
 
+    const [image, setImage] = useState(null)
+    const selectFile = () => {
+        var options = {
+          includeBase64: true,
+          saveToPhotos: true
+        };
+    
+        launchCamera(options, res => {
+          console.log('Response = ', res);
+    
+          if (res.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (res.error) {
+            console.log('ImagePicker Error: ', res.error);
+          } else if (res.customButton) {
+            console.log('User tapped custom button: ', res.customButton);
+            alert(res.customButton);
+          } else {
+            let source = res.assets[0] ;
+            setImage(source)
+          }
+        });
+      };
+    const saveFile = () => {
+        const { uri, base64 } = image;
+        const filename = uri.substring(uri.lastIndexOf('/') + 1);
+        
+        firebase.storage().ref().child(filename).putString(base64, 'base64')
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
+    console.log('>>>',image)
     if (data.length === 0) {
         return (<><ActivityIndicator size='large' color='red' /></>)
     } else {
         return (
             <>
                 <View>
+                    <Image
+                        source={{ uri: image?.uri }}
+                        style={{ width: 200, height: 200 }}
+                    />
+                    <Pressable onPress={selectFile}>
+                        <Text>Take photo</Text>
+                    </Pressable>
+                    <Pressable onPress={saveFile}>
+                        <Text>Save photo</Text>
+                    </Pressable>
+                </View>
+                {/* <View>
                     <FlatList
                         data={data}
                         renderItem={renderItem}
                         keyExtractor={item => item.key}
                     />
-                </View>
+                </View> */}
 
-                <View>
+                {/* <View>
                     <Pressable onPress={onPressAddNew}>
                         <Text>Add new</Text>
                     </Pressable>
@@ -109,7 +154,7 @@ const Home = props => {
                         </View>
                     </Modal>
 
-                </View>
+                </View> */}
             </>
         )
     }
