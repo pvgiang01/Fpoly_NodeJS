@@ -13,6 +13,7 @@ const Home = props => {
     const [title, setTitle] = useState(null)
     const [body, setBody] = useState(null)
     const [visible, setVisible] = useState(false)
+    const [img, setImg] = useState(null)
 
     useEffect(() => {
         // select * from posts
@@ -20,8 +21,8 @@ const Home = props => {
             .onSnapshot(results => {
                 let posts = []
                 results.forEach(element => {
-                    const { title, body } = element.data()
-                    posts.push({ title, body, key: element.id })
+                    const { title, body, avatar } = element.data()
+                    posts.push({ title, body, avatar, key: element.id })
                 })
                 setData(posts)
             })
@@ -31,9 +32,14 @@ const Home = props => {
         const { item } = props
         return (
             <View style={{ backgroundColor: 'grey', marginBottom: 20 }}>
+                <Image
+                        source={{ uri: item?.avatar }}
+                        style={{ width: 200, height: 200 }}
+                    />
                 <Pressable
                     onPress={() => navigation.navigate('Details', { key: item.key })}>
                     <Text>{item.title}</Text>
+                    
                 </Pressable>
             </View>
         )
@@ -54,11 +60,12 @@ const Home = props => {
     const [image, setImage] = useState(null)
     const selectFile = () => {
         var options = {
-          includeBase64: true,
-          saveToPhotos: true
+            maxHeight: 250,
+            maxWidth: 350,
+            saveToPhotos: true
         };
     
-        launchCamera(options, res => {
+        launchImageLibrary(options, res => {
           console.log('Response = ', res);
     
           if (res.didCancel) {
@@ -74,90 +81,67 @@ const Home = props => {
           }
         });
       };
-    const saveFile = () => {
-        const { uri, base64 } = image;
-        const filename = uri.substring(uri.lastIndexOf('/') + 1);
-        
-        firebase.storage().ref().child(filename).putString(base64, 'base64')
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
-    }
-    console.log('>>>',image)
-    if (data.length === 0) {
-        return (<><ActivityIndicator size='large' color='red' /></>)
-    } else {
-        return (
-            <>
-                <View>
-                    <Image
-                        source={{ uri: image?.uri }}
-                        style={{ width: 200, height: 200 }}
-                    />
-                    <Pressable onPress={selectFile}>
-                        <Text>Take photo</Text>
-                    </Pressable>
-                    <Pressable onPress={saveFile}>
-                        <Text>Save photo</Text>
-                    </Pressable>
-                </View>
-                {/* <View>
-                    <FlatList
-                        data={data}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.key}
-                    />
-                </View> */}
+    const uploadImageAsync = async () => {
+        const { uri, fileName } = image
+        const ref = firebase
+          .storage()
+          .ref()
+          .child(fileName);
+    
+        const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+            resolve(xhr.response);
+          };
+          xhr.onerror = function() {
+            reject(new TypeError("Network request failed"));
+          };
+          xhr.responseType = "blob";
+          xhr.open("GET", uri, true);
+          xhr.send(null);
+        });
+    
+        var mimeString = uri.split(":")[1]
+    
+        const snapshot = await ref.put(blob, { contentType: mimeString });
+    
+        let url = await snapshot.ref.getDownloadURL();
+        console.log('>>>>', url)
+        setImg(url)
+        return url;
+      }
 
-                {/* <View>
-                    <Pressable onPress={onPressAddNew}>
-                        <Text>Add new</Text>
-                    </Pressable>
+      return (
+          <View>
+              <FlatList 
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={item => item.key}
+              />
+          </View>
+      )
 
-                    <Modal
-                        animationType='slide'
-                        transparent={true}
-                        visible={visible}
-                        onRequestClose={() => setVisible(!visible)}
-                    >
-                        <View 
-                            style={{
-                                backgroundColor: 'white',
-                                margin: 20,
-                                padding: 15,
-                                borderRadius: 20,
-                                height: 400,
-                                shadowColor: "#000",
-                                shadowOffset: {
-                                    width: 0,
-                                    height: 2
-                                },
-                                shadowOpacity: 0.25,
-                                shadowRadius: 4,
-                                elevation: 5
-                            }}
-                        >
-                            <TextInput
-                                placeholder='Tiêu đề'
-                                value={title}
-                                onChangeText={setTitle}
-                            />
-                            <TextInput
-                                placeholder='Nội dung'
-                                multiline={true}
-                                numberOfLines={10}
-                                value={body}
-                                onChangeText={setBody}                                
-                            />
-                            <Pressable onPress={onPressSave}>
-                                <Text>Save</Text>
-                            </Pressable>
-                        </View>
-                    </Modal>
+    // return (
+    //     <View>
+    //     <Image
+    //         source={{ uri: image?.uri }}
+    //         style={{ width: 200, height: 200 }}
+    //     />
+    //     {
+    //         img &&  <Image
+    //                     source={{ uri: img }}
+    //                     style={{ width: 300, height: 300 }}
+    //                 />
+    //     }
+    //     <Pressable onPress={selectFile}>
+    //         <Text>Take photo</Text>
+    //     </Pressable>
+    //     <Pressable onPress={uploadImageAsync}>
+    //         <Text>Save photo</Text>
+    //     </Pressable>
+    // </View>
+    // )
 
-                </View> */}
-            </>
-        )
-    }
 }
 
 
