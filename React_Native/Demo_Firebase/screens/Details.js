@@ -12,6 +12,10 @@ import { Picker } from '@react-native-picker/picker'
 
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
+
+
 import firebase from '../utilities/firebaseDB'
 
 const Details = props => {

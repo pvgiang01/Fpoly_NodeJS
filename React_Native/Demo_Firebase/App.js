@@ -10,6 +10,7 @@ import Loading from './screens/Loading'
 import Login from './screens/Login'
 import SignUp from './screens/SignUp'
 import Details from './screens/Details'
+import AddNew from './screens/AddNew'
 
 
 const Stack = createStackNavigator()
@@ -17,7 +18,8 @@ const Stack = createStackNavigator()
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Loading">
+      <Stack.Navigator initialRouteName="AddNew">
+        <Stack.Screen name="AddNew" component={AddNew} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Details" component={Details} />
         <Stack.Screen name="Loading" component={Loading} />
