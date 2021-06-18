@@ -18,6 +18,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Loading">
         <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="AddNew" component={AddNew}/>
+        <Stack.Screen name="Detail" component={Detail}/>
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="Loading" component={Loading}/>
         <Stack.Screen name="SignUp" component={SignUp}/>

@@ -3,6 +3,7 @@ import firebase from '../database/fbConfig'
 import { TextInput, View, Pressable, Image, Text, FlatList } from 'react-native'
 
 const Home = props => {
+    const {navigation} = props
     const [data, setData] = useState([])
 
     useEffect(() => {
@@ -20,7 +21,7 @@ const Home = props => {
     const renderItem = ({ item }) => {
         return (
             <View>
-                <Pressable >
+                <Pressable onPress={() => navigation.navigate('Detail', {key: item.key})}>
                     <Image 
                         style={{width: 200, height: 200}}
                         source={{uri: item.avatar}}
@@ -28,6 +29,7 @@ const Home = props => {
                     <Text>{item.title}</Text>
                     <Text>{item.body}</Text>
                 </Pressable>
+                <Pressable onPress={() => navigation.navigate('Update', {key: item.key})}><Text>Update</Text></Pressable>
             </View>
         )
     }
