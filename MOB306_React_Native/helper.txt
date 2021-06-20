@@ -1,0 +1,84 @@
+Android React Native
+	
+	giới thiệu bảng điểm
+	giới thiệu assignment
+	giới thiệu syllabus
+	cài môi trường 
+		https://reactnative.dev/docs/environment-setup
+	
+	quy tắc đặt tên project nộp bài, dat tien tieng viet
+==========================
+	Bài 2:
+		giới thiệu component, state, props
+			https://reactnative.dev/docs/intro-react
+		giới thiệu style
+			https://reactnative.dev/docs/style
+			https://reactnative.dev/docs/height-and-width
+			https://reactnative.dev/docs/flexbox
+			https://reactnative.dev/docs/images
+==========================
+Bài 3:
+	Giới thiệu flat list, section list, scrollview, text, text input, image, image background
+	https://reactnative.dev/docs/components-and-apis#list-views
+	Giới thiệu Image Style
+	https://reactnative.dev/docs/image-style-props
+==========================
+Bài 4:
+Giới thiệu react hook
+
+Giới thiệu Pressable <<<< new
+Sử dụng Http, Button, Animation, Router
+Giới thiệu fetch
+https://reactnative.dev/docs/network
+Giới thiệu Button, Touch
+Giới thiệu Animation
+
+
+==========================
+Bài 5: 
+	View, Webview, Modal, ActivityIndicator
+
+
+==========================
+Bài 6:
+	Picker, Statusbar
+https://www.instamobile.io/mobile-development/react-native-firebase-storage/
+==========================
+
+Bài 7: 
+	Alert, Geolocation, AsyncStorage, Camera
+
+=========================
+
+Bài 8:
+	Tổng kết
+	Vibration
+	https://reactnative.dev/docs/vibration
+	Show thông báo
+	https://reactnative.dev/docs/toastandroid
+
+
+
+==========================
+FB
+https://www.positronx.io/create-react-native-firebase-crud-app-with-firestore/
+
+npm install firebase --save
+
+https://vntalking.com/react-native-authentication-voi-firebase-don-gian-va-de-hieu.html
+
+photo
+
+https://www.positronx.io/react-native-pick-images-from-camera-gallery-example/
+https://www.instamobile.io/mobile-development/react-native-firebase-storage/
+
+rnfirebase
+
+https://dev.to/younesh1989/upload-files-using-react-native-and-firebase-part-1-a7h
+
+
+
+thu vien
+https://github.com/ReactNativeNews/React-Native-Apps
+https://github.com/pcqpcq/open-source-android-apps
+
