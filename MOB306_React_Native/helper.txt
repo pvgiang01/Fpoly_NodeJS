@@ -8,14 +8,14 @@ Android React Native
 	
 	quy tắc đặt tên project nộp bài, dat tien tieng viet
 ==========================
-	Bài 2:
-		giới thiệu component, state, props
-			https://reactnative.dev/docs/intro-react
-		giới thiệu style
-			https://reactnative.dev/docs/style
-			https://reactnative.dev/docs/height-and-width
-			https://reactnative.dev/docs/flexbox
-			https://reactnative.dev/docs/images
+Bài 2:
+	giới thiệu component, state, props
+	https://reactnative.dev/docs/intro-react
+	giới thiệu style
+	https://reactnative.dev/docs/style
+	https://reactnative.dev/docs/height-and-width
+	https://reactnative.dev/docs/flexbox
+	https://reactnative.dev/docs/images
 ==========================
 Bài 3:
 	Giới thiệu flat list, section list, scrollview, text, text input, image, image background
@@ -24,14 +24,13 @@ Bài 3:
 	https://reactnative.dev/docs/image-style-props
 ==========================
 Bài 4:
-Giới thiệu react hook
-
-Giới thiệu Pressable <<<< new
-Sử dụng Http, Button, Animation, Router
-Giới thiệu fetch
-https://reactnative.dev/docs/network
-Giới thiệu Button, Touch
-Giới thiệu Animation
+	Giới thiệu react hook
+	Giới thiệu Pressable <<<< new
+	Sử dụng Http, Button, Animation, Router
+	Giới thiệu fetch
+	https://reactnative.dev/docs/network
+	Giới thiệu Button, Touch
+	Giới thiệu Animation
 
 
 ==========================
@@ -42,7 +41,7 @@ Bài 5:
 ==========================
 Bài 6:
 	Picker, Statusbar
-https://www.instamobile.io/mobile-development/react-native-firebase-storage/
+	https://www.instamobile.io/mobile-development/react-native-firebase-storage/
 ==========================
 
 Bài 7: 
@@ -61,24 +60,27 @@ Bài 8:
 
 ==========================
 FB
-https://www.positronx.io/create-react-native-firebase-crud-app-with-firestore/
+====
+	https://www.positronx.io/create-react-native-firebase-crud-app-with-firestore/
 
-npm install firebase --save
+	npm install firebase --save
 
-https://vntalking.com/react-native-authentication-voi-firebase-don-gian-va-de-hieu.html
+	https://vntalking.com/react-native-authentication-voi-firebase-don-gian-va-de-hieu.html
 
 photo
-
-https://www.positronx.io/react-native-pick-images-from-camera-gallery-example/
-https://www.instamobile.io/mobile-development/react-native-firebase-storage/
+====
+	https://www.positronx.io/react-native-pick-images-from-camera-gallery-example/
+	https://www.instamobile.io/mobile-development/react-native-firebase-storage/
 
 rnfirebase
+====
 
-https://dev.to/younesh1989/upload-files-using-react-native-and-firebase-part-1-a7h
+	https://dev.to/younesh1989/upload-files-using-react-native-and-firebase-part-1-a7h
 
 
 
 thu vien
-https://github.com/ReactNativeNews/React-Native-Apps
-https://github.com/pcqpcq/open-source-android-apps
+====
+	https://github.com/ReactNativeNews/React-Native-Apps
+	https://github.com/pcqpcq/open-source-android-apps
 
