@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config()
-
+const session = require('express-session')
 
 
 
@@ -28,7 +28,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({
+  secret: process.env.JWT_SECRET_KEY,
+  resave: true,
+  saveUninitialized: true,
+  cookie: {secure: false}
+}))
 
 
 

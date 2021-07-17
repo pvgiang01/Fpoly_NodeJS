@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native'
 import * as firebase from 'firebase';
-import { AuthenticationContextProvider } from './components/AuthenticationContext';
-import { Navigation } from './components/navigation';
+import { AccountContextProvider } from './components/account/AccountContext';
+import { Navigation } from './components/navigation/index';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0GIULYZqhrZggsj76yZtspH1O56VAZVg",
@@ -16,15 +15,16 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+  firebase.firestore().settings({ experimentalForceLongPolling: true });
 }
 
 const App = () => {  
 
   return (
     <>
-     <AuthenticationContextProvider>
+     <AccountContextProvider>
             <Navigation />
-          </AuthenticationContextProvider>
+      </AccountContextProvider>
     </>
   )
 }

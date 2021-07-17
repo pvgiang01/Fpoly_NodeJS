@@ -1,7 +1,13 @@
-const studentService = require('../services/student')
+const studentService = require("../services/student");
 
+exports.get = () => {
+  return studentService.get();
+};
 
+exports.getOne = (id) => {
+  return studentService.getOne(id);
+};
 
-exports.get = function getAllStudents() {
-    return studentService.get()
-}
+exports.delete = (id) => {
+  studentService.delete(id);
+};
