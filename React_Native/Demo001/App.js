@@ -1,36 +1,54 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native'
-import PhepTinh from './components/PhepTinh';
-import PhepCong from './components/PhepCong';
-import KetQua from './components/KetQua';
-import DoiSo from './components/DoiSo';
+import * as firebase from 'firebase';
+import { AuthenticationContextProvider } from './components/AuthenticationContext';
+import { Navigation } from './components/navigation';
 
-// component
-const App = () => {
+const firebaseConfig = {
+  apiKey: "AIzaSyB0GIULYZqhrZggsj76yZtspH1O56VAZVg",
+  authDomain: "my21may21project.firebaseapp.com",
+  projectId: "my21may21project",
+  storageBucket: "my21may21project.appspot.com",
+  messagingSenderId: "550765995121",
+  appId: "1:550765995121:web:8fe5316f35c29ceebae7d0",
+  measurementId: "G-366L3N7HH0"
+};
 
-  const [a, setA] = useState(7)
-  const [b, setB] = useState(5)
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-  const onChangeNumber = (number1, number2) => {
-    setA(number1)
-    setB(number2)
-  }
+const App = () => {  
 
   return (
-    <View>
-      <PhepCong a={a} b={b}/>
-      <KetQua a={a} b={b}/>
-      <DoiSo onChangeNumber={onChangeNumber}/>
-    </View>
+    <>
+     <AuthenticationContextProvider>
+            <Navigation />
+          </AuthenticationContextProvider>
+    </>
   )
 }
 
 export default App
 
-const styles = StyleSheet.create({
-  text:{
-    fontSize: 40
-  }
-})
 
-// npx react-native run-android
+
+
+
+
+// lab 1: set up env
+
+
+
+
+// lab 2: Crazy math
+
+
+
+// lab 3: firebase, navigation
+// show flat list, image, scroll view, detail
+
+
+
+
+// lab 4:
