@@ -1,5 +1,7 @@
 import React, {useState, createContext, useEffect} from 'react';
-import * as firebase from 'firebase';
+
+import { getAllNews, deleteNews, insertNews, updateNews } from './NewsService';
+
 
 export const NewsContext = createContext();
 
@@ -7,28 +9,16 @@ export const NewsContextProvider = ({children}) => {
   const [data, setData] = useState([]); // data: danh sach tin tuc tu firebase
 
   // get all new from firebase
-  const onGet = () => {
-    firebase
-      .firestore()
-      .collection('news')
-      .onSnapshot(res => {
-        let arr = [];
-        res.forEach(element => {
-          const {id, images, title, content} = element.data();
-          arr.push({id, images, title, content, key: element.id});
-        });
-        setData(arr);
-      });
-  };
+  const onGet = () => { getAllNews(setData) };
 
   // add new to firebase
-  const onAddNew = () => {};
+  const onAddNew = (news) => { insertNews(news) };
 
   // delete
-  const onDelete = id => {};
+  const onDelete = async (key) => { await deleteNews(key) };
 
   // update
-  const onUpdate = () => {};
+  const onUpdate = (news) => { updateNews(news) };
 
   useEffect(() => {
     onGet();

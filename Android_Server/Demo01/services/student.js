@@ -1,6 +1,6 @@
 // module
 
-const students = [
+var students = [
   {
     id: 1,
     name: "Nguyễn Văn A",
@@ -8,30 +8,34 @@ const students = [
     classId: 1,
     dob: "2000-06-20",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
   {
     id: 2,
     name: "Nguyễn Văn B",
     mobile: "090888887",
-    classId: 1,
+    classId: 2,
     dob: "2000-06-21",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
   {
     id: 3,
     name: "Nguyễn Văn C",
     mobile: "090888886",
-    classId: 1,
+    classId: 3,
     dob: "2000-06-22",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
   {
     id: 4,
     name: "Nguyễn Văn D",
     mobile: "090888885",
-    classId: 1,
+    classId: 4,
     dob: "2000-06-23",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
   {
     id: 5,
@@ -40,6 +44,7 @@ const students = [
     classId: 1,
     dob: "2000-06-24",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
   {
     id: 6,
@@ -48,6 +53,7 @@ const students = [
     classId: 1,
     dob: "2000-06-25",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
   {
     id: 7,
@@ -56,6 +62,7 @@ const students = [
     classId: 1,
     dob: "2000-06-26",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
   {
     id: 8,
@@ -64,6 +71,7 @@ const students = [
     classId: 1,
     dob: "2000-06-27",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
   {
     id: 9,
@@ -72,6 +80,7 @@ const students = [
     classId: 1,
     dob: "2000-06-28",
     avatar: "",
+    address: "quận 12, Hồ Chí Minh"
   },
 ];
 
@@ -90,3 +99,11 @@ exports.getOne = function getOneStudent(id) {
 exports.delete = (id) => {
   students = students.filter((st) => st.id != id);
 };
+
+exports.update = (st) => {
+  students = students.map(item => item.id == st.id ? 
+    {...item, name: st.name, dob: st.dob, mobile: st.mobile, 
+      address: st.address, classId: st.classId} : 
+    item)
+}
+

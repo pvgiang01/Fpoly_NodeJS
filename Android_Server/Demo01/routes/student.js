@@ -1,13 +1,18 @@
 var express = require("express");
 var router = express.Router();
 var studentController = require("../controllers/student");
+var clazzController = require("../controllers/clazz");
 const authenticate = require("../middle/authentication");
+
+
 
 /* GET student list. */
 router.get("/", [authenticate.checkLogin], function (req, res, next) {
   const students = studentController.get();
-  res.render("students", { danhSach: students });
+  const clazz = clazzController.get();
+  res.render("students", { danhSach: students, clazz: clazz  });
 });
+
 
 /* GET one student. */
 router.get("/edit/:id", [authenticate.checkLogin], function (req, res, next) {
@@ -15,7 +20,8 @@ router.get("/edit/:id", [authenticate.checkLogin], function (req, res, next) {
     params: { id },
   } = req;
   const student = studentController.getOne(id);
-  res.render("student", { student: student });
+  const clazz = clazzController.get();
+  res.render("student", { student: student, clazz: clazz });
 });
 
 
@@ -26,6 +32,14 @@ router.delete("/delete/:id", [authenticate.checkLogin], function (req, res, next
     } = req;
    studentController.delete(id)   
    res.json({result: true})
+});
+
+
+/* UPDATE one student. */
+router.post("/update/:id", [authenticate.checkLogin], function (req, res, next) {
+  let {params, body} = req
+  studentController.update(params, body)
+  res.redirect('/student')
 });
 
 

@@ -58,26 +58,33 @@
                         BASIC FORM
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" action="/student/update/{{student.id}}" method="POST">
                             <div class="form-group">
                                 <label>Enter Name</label>
-                                <input value="{{student.name}}" class="form-control" type="text" />
+                                <input name="name" value="{{student.name}}" class="form-control" type="text" />
                             </div>
                             <div class="form-group">
                                 <label>Enter Date</label>
-                                <input value="{{student.dob}}" class="form-control" type="date" />
+                                <input name="dob" value="{{student.dob}}" class="form-control" type="date" />
+                            </div>
+                            <div class="form-group">
+                                <label>Enter Mobile</label>
+                                <input name="mobile" value="{{student.mobile}}" class="form-control" type="text" />
                             </div>
                             <div class="form-group">
                                 <label>Text area</label>
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea name="address" class="form-control" rows="3">{{student.address}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label>Select Example</label>
-                                <select class="form-control">
-                                    <option>One Vale</option>
-                                    <option>Two Vale</option>
-                                    <option>Three Vale</option>
-                                    <option>Four Vale</option>
+                                <select class="form-control" name="classId">
+                                    {{#each clazz}}
+                                        {{#if (soSanh this.id ../student.classId)}}
+                                            <option selected value="{{this.id}}">{{this.name}}</option>
+                                        {{else}}
+                                            <option value="{{this.id}}">{{this.name}}</option>
+                                        {{/if}}                                        
+                                    {{/each}}                                    
                                 </select>
                             </div>
                             <hr />

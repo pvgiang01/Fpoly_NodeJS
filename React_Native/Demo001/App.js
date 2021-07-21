@@ -51,4 +51,7 @@ export default App
 
 
 
-// lab 4:
+// lab 4: firebase, navigation
+// show flat list, image, scroll view, detail
+// xóa, confirm, thêm mới, cập nhật
+
