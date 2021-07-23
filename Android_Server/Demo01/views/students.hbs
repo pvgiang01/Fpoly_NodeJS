@@ -47,6 +47,59 @@
         <div class="row pad-botm">
             <div class="col-md-12">
                 <h4 class="header-line">PRODUCTS</h4>
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                    Add new
+                </button>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="padding: 16px;">
+                            <form role="form" action="/student/insert" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Modal title Here</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Enter Name</label>
+                                        <input id="name" name="name" onchange="validateName()" class="form-control" type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Enter Date</label>
+                                        <input id="dob" name="dob" onchange="validateDob()" class="form-control" type="date" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Enter Mobile</label>
+                                        <input name="mobile" class="form-control" type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Text area</label>
+                                        <textarea name="address" class="form-control"rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Select Example</label>
+                                        <select class="form-control" name="classId">
+                                            {{#each clazz}} 
+                                                <option value="{{this.id}}">{{this.name}}</option>                                            
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <img id="student-avatar" width="170" height="170" src="" />
+                                        <input type="hidden" name="avatar">
+                                        <input onchange="onchangeImg()" type="file" id="img" class="form-control-file border" name="file" />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button id="btn-submit" type="submit" disabled class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -72,19 +125,19 @@
                                 <td>{{this.name}}</td>
                                 <td>{{this.mobile}}</td>
                                 <td>{{formatDate this.dob}}</td>
-                               
+
                                 <td class="center">{{getClazzName this.classId ../clazz}}</td>
-                                <td class="center">{{this.avatar}}</td>
+                                <td class="center">
+                                    <img width="70" height="70" src="{{this.avatar}}" />
+                                </td>
                                 <td>
-                                    <button type="button" class="btn btn-link" 
-                                        onclick="onEdit({{this.id}})">
-                                        Edit 
+                                    <button type="button" class="btn btn-link" onclick="onEdit('{{this.id}}')">
+                                        Edit
                                     </button>
 
-                                    <button type="button" class="btn btn-link"
-                                        onclick="onDelete({{this.id}})">
-                                        Delete 
-                                    </button>                                   
+                                    <button type="button" class="btn btn-link" onclick="onDelete('{{this.id}}')">
+                                        Delete
+                                    </button>
                                 </td>
                             </tr>
                             {{/each}}
@@ -107,8 +160,96 @@
         </div>
     </div>
 </section>
+<script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
 
 <script>
+
+    var firebaseConfig = {
+        apiKey: "AIzaSyB0GIULYZqhrZggsj76yZtspH1O56VAZVg",
+        authDomain: "my21may21project.firebaseapp.com",
+        projectId: "my21may21project",
+        storageBucket: "my21may21project.appspot.com",
+        messagingSenderId: "550765995121",
+        appId: "1:550765995121:web:8fe5316f35c29ceebae7d0",
+        measurementId: "G-366L3N7HH0"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+
+    const onchangeImg = () => {
+        var file = document.getElementById('img').files[0];
+        var reader = new FileReader();
+        reader.onload = (e) => {
+            document.getElementById('student-avatar').src= e.target.result
+        }
+        reader.readAsDataURL(file)
+        
+        var storageRef = firebase.storage().ref( uuid());
+        let uploadTask = storageRef.put(file);
+
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+            (snapshot) =>{},
+            (error) =>{console.log(error) },
+            () =>{
+                uploadTask.snapshot.ref.getDownloadURL().then((url) =>{  
+                    console.log(url)              
+                })
+            }
+        )        
+    }   
+
+    const uuid =  () => {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+        });
+    }
+  
+
+
+
+    let isNameValid = isDobValid = false;
+    const validateName = () => {
+        let val = document.getElementById('name').value;
+        if(!val || val.trim().length == 0 || val.trim().length > 100){
+            alert('Name invalid')
+            isNameValid = false;
+        }
+        else{
+            isNameValid = true;
+
+        }
+        validateForm()
+    }
+
+    const validateDob = () => {
+        let val = document.getElementById('dob').value;
+        let _date = new Date(val)
+
+        let today = new Date()
+        today.setHours(0,0,0,0)        
+
+        if(!val || _date > today){
+            alert('DOB invalid')
+            isDobValid = false;
+        }
+        else{
+            isDobValid = true;
+        }
+        validateForm()
+    }
+
+    const validateForm = () => {
+        if(!isNameValid || !isDobValid){
+            document.getElementById('btn-submit').disabled = true
+        }
+        else {
+            document.getElementById('btn-submit').disabled = false
+        }
+    }
+
+
     const onDelete = async (id) => {
         const url = 'http://localhost:3000/student/delete/' + id
         const option = {
@@ -120,9 +261,9 @@
         try {
             await fetchAPI(url, option)
             window.location.href = '/student'
-        } catch(e) {
-            console.log('Delete error: ',e)
-        } 
+        } catch (e) {
+            console.log('Delete error: ', e)
+        }
     }
 
     const fetchAPI = async (url, option) => {

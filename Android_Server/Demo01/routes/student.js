@@ -43,5 +43,11 @@ router.post("/update/:id", [authenticate.checkLogin], function (req, res, next) 
 });
 
 
+/* INSERT one student. */
+router.post("/insert", [authenticate.checkLogin], function (req, res, next) {
+  let {body} = req
+  studentController.insert(body)
+  res.redirect('/student')
+});
 
 module.exports = router;

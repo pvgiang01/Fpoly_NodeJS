@@ -7,7 +7,7 @@ var students = [
     mobile: "090888888",
     classId: 1,
     dob: "2000-06-20",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/zoom/504_315/2021/7/22/2189101775282359019378123875991481275171759n-16269222968301934423727-crop-1626922383928522459632.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
   {
@@ -16,7 +16,7 @@ var students = [
     mobile: "090888887",
     classId: 2,
     dob: "2000-06-21",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
   {
@@ -25,7 +25,7 @@ var students = [
     mobile: "090888886",
     classId: 3,
     dob: "2000-06-22",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
   {
@@ -34,7 +34,7 @@ var students = [
     mobile: "090888885",
     classId: 4,
     dob: "2000-06-23",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
   {
@@ -43,7 +43,7 @@ var students = [
     mobile: "090888884",
     classId: 1,
     dob: "2000-06-24",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
   {
@@ -52,7 +52,7 @@ var students = [
     mobile: "090888883",
     classId: 1,
     dob: "2000-06-25",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
   {
@@ -61,7 +61,7 @@ var students = [
     mobile: "090888882",
     classId: 1,
     dob: "2000-06-26",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
   {
@@ -70,7 +70,7 @@ var students = [
     mobile: "090888881",
     classId: 1,
     dob: "2000-06-27",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
   {
@@ -79,7 +79,7 @@ var students = [
     mobile: "090888880",
     classId: 1,
     dob: "2000-06-28",
-    avatar: "",
+    avatar: "https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg",
     address: "quận 12, Hồ Chí Minh"
   },
 ];
@@ -107,3 +107,7 @@ exports.update = (st) => {
     item)
 }
 
+
+exports.insert = (st) => {
+  students.push(st)
+}

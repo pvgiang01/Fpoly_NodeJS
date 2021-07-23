@@ -36,7 +36,6 @@ export const updateNews = (news) => {
     firebase.firestore().collection('news').doc(news.key).set(news)
     .then(item => console.log('Update success: ', item))
     .catch(err=> console.log('Error insert: ', err))
-  } catch (error) {
-    
+  } catch (error) {    
   }
 }
