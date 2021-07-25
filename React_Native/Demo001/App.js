@@ -55,3 +55,7 @@ export default App
 // show flat list, image, scroll view, detail
 // xóa, confirm, thêm mới, cập nhật
 
+
+
+// lab 5: sign in, sign up
+

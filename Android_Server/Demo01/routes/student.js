@@ -3,7 +3,7 @@ var router = express.Router();
 var studentController = require("../controllers/student");
 var clazzController = require("../controllers/clazz");
 const authenticate = require("../middle/authentication");
-
+const upload = require('../middle/upload');
 
 
 /* GET student list. */
@@ -36,8 +36,12 @@ router.delete("/delete/:id", [authenticate.checkLogin], function (req, res, next
 
 
 /* UPDATE one student. */
-router.post("/update/:id", [authenticate.checkLogin], function (req, res, next) {
-  let {params, body} = req
+router.post("/update/:id", [authenticate.checkLogin, upload.single('avatar')], function (req, res, next) {
+  let {params, body, file} = req  
+  if (file) {
+    let avatar = 'http://192.168.103.2:3000/images/' + file.originalname 
+    body = { ...body, avatar }
+  }
   studentController.update(params, body)
   res.redirect('/student')
 });

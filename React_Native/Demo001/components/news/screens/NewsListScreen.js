@@ -9,10 +9,12 @@ import {
   TextInput,
 } from 'react-native';
 import {NewsContext} from '../NewsContext';
+import { AccountContext } from '../../account/AccountContext';
 
 export const NewsListScreen = props => {
   const {navigation} = props;
   const {data, onAddNew} = useContext(NewsContext);
+  const {onLogout} = useContext(AccountContext);
   const [visible, setVisible] = useState(false);
 
   const [title, setTitle] = useState('');
@@ -52,6 +54,11 @@ export const NewsListScreen = props => {
           style={styles.buttonContainer}
           onPress={() => setVisible(true)}>
           <Text style={styles.text}>Add new</Text>
+        </Pressable>
+        <Pressable
+          style={styles.buttonContainer}
+          onPress={() => onLogout()}>
+          <Text style={styles.text}>Log Out</Text>
         </Pressable>
       </View>
       <FlatList

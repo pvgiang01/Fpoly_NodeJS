@@ -1,8 +1,7 @@
 import React, {useState, createContext} from 'react';
 import * as firebase from 'firebase';
 
-
-
+import { signIn, signOut, signUp } from './AccountService';
 
 export const AccountContext = createContext();
 
@@ -10,25 +9,24 @@ export const AccountContextProvider = ({children}) => {
     const [user, setUser] = useState(null);
 
     firebase.auth().onAuthStateChanged((u) => {
-        if (u) setUser(u);
+        if (u) {
+            setUser(u);
+        }  
+        else {
+            setUser(null);
+        }      
     })
+    
+    const onLogin = (email, password) => signIn(email, password)    
 
-    const onLogin = (email, password) => {
+    const onLogout = () => signOut()
 
-    }
-
-    const onLogout = () => {
-
-    }
-
-    const onRegister = (email, password, confirmPassword) => {
-
-    }
+    const onRegister = (email, password) => signUp(email, password)
 
     return (
         <AccountContext.Provider 
             value={{
-                isLoggedIn: true,
+                isLoggedIn: !!user, // true/false
                 onLogin,
                 onLogout,
                 onRegister

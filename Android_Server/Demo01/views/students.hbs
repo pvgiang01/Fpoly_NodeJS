@@ -88,8 +88,9 @@
                                     <hr />
                                     <div class="form-group">
                                         <img id="student-avatar" width="170" height="170" src="" />
-                                        <input type="hidden" name="avatar">
-                                        <input onchange="onchangeImg()" type="file" id="img" class="form-control-file border" name="file" />
+                                        <input type="hidden" id="avatar" name="avatar">
+                                        <input onchange="onchangeImg()" type="file" 
+                                            id="img" class="form-control-file border" name="file" />
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -160,7 +161,6 @@
         </div>
     </div>
 </section>
-<script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
 
 <script>
 
@@ -193,7 +193,8 @@
             (error) =>{console.log(error) },
             () =>{
                 uploadTask.snapshot.ref.getDownloadURL().then((url) =>{  
-                    console.log(url)              
+                    console.log(url)  
+                    document.getElementById('avatar').value= url           
                 })
             }
         )        

@@ -101,9 +101,11 @@ exports.delete = (id) => {
 };
 
 exports.update = (st) => {
+  console.log(st);
   students = students.map(item => item.id == st.id ? 
     {...item, name: st.name, dob: st.dob, mobile: st.mobile, 
-      address: st.address, classId: st.classId} : 
+      address: st.address, classId: st.classId, 
+      avatar: st.avatar ? st.avatar : item.avatar} : 
     item)
 }
 

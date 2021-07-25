@@ -14,8 +14,8 @@ exports.delete = (id) => {
 
 exports.update = (params, body) => {
   let {id} = params
-  let {name, dob, mobile, address, classId} = body
-  studentService.update({id, name, dob, mobile, address, classId})
+  let {name, dob, mobile, address, classId, avatar} = body
+  studentService.update({id, name, dob, mobile, address, classId, avatar})
 }
 
 exports.insert = (body) => {
@@ -26,8 +26,8 @@ exports.insert = (body) => {
     });
   }
   let id = uuid()
-  let {name, dob, mobile, address, classId} = body
-  studentService.insert({id, name, dob, mobile, address, classId})
+  let {name, dob, mobile, address, classId, avatar} = body
+  studentService.insert({id, name, dob, mobile, address, classId, avatar})
 }
 
 

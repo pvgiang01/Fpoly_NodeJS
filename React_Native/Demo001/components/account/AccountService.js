@@ -1,16 +1,17 @@
 import * as firebase from 'firebase';
 
-export const login = async (email, password) => {
-    let status = await firebase.auth()
-                    .signInWithEmailAndPassword(email, password)
-    return status
-  }
-  
-  export const register = () => {
-    
-  }
+export const signIn = async (email, password) => {
+  await firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password); 
+};
 
+export const signUp = async (email, password) => {
+  await firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password);
+};
 
-
-
-
+export const signOut = async () => {
+ await firebase.auth().signOut();
+};
