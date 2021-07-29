@@ -1,5 +1,5 @@
 const clazzService = require("../services/clazz");
 
-exports.get = () => {
-  return clazzService.get();
+exports.get = async () => {
+  return await clazzService.get();
 };

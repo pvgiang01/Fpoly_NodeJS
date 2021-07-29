@@ -8,7 +8,9 @@ var clazz = [
     {id: 6, name: 'LT127'}
 ]
 
+const clazzModel = require('../models/clazzModel')
+
 // select * from clazz
-exports.get = function () {
-    return clazz;
+exports.get = async function () {
+    return await clazzModel.find();
 };

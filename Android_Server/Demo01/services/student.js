@@ -84,9 +84,11 @@ var students = [
   },
 ];
 
+const studentModel = require('../models/studentModel')
+
 // select * from students
-exports.get = function getAllStudents() {
-  return students;
+exports.get = async function getAllStudents() {
+  return await studentModel.find();
 };
 
 // select * from students where id = ?
@@ -96,8 +98,8 @@ exports.getOne = function getOneStudent(id) {
 };
 
 // delete students where id = ?
-exports.delete = (id) => {
-  students = students.filter((st) => st.id != id);
+exports.delete = async (id) => {
+  await studentModel.remove({_id: id})
 };
 
 exports.update = (st) => {
@@ -110,6 +112,7 @@ exports.update = (st) => {
 }
 
 
-exports.insert = (st) => {
-  students.push(st)
+exports.insert = async (st) => {
+  const stu = new studentModel(st)
+  await stu.save()
 }

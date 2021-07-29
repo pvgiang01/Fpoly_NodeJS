@@ -7,9 +7,10 @@ const upload = require('../middle/upload');
 
 
 /* GET student list. */
-router.get("/", [authenticate.checkLogin], function (req, res, next) {
-  const students = studentController.get();
-  const clazz = clazzController.get();
+router.get("/", [authenticate.checkLogin], async function (req, res, next) {
+  const students = await studentController.get();
+  const clazz = await clazzController.get();
+  console.log(students, clazz);
   res.render("students", { danhSach: students, clazz: clazz  });
 });
 
@@ -26,11 +27,11 @@ router.get("/edit/:id", [authenticate.checkLogin], function (req, res, next) {
 
 
 /* DELETE one student. */
-router.delete("/delete/:id", [authenticate.checkLogin], function (req, res, next) {
+router.delete("/delete/:id", [authenticate.checkLogin], async function (req, res, next) {
     const {
       params: { id },
     } = req;
-   studentController.delete(id)   
+   await studentController.delete(id)   
    res.json({result: true})
 });
 
@@ -48,9 +49,9 @@ router.post("/update/:id", [authenticate.checkLogin, upload.single('avatar')], f
 
 
 /* INSERT one student. */
-router.post("/insert", [authenticate.checkLogin], function (req, res, next) {
+router.post("/insert", [authenticate.checkLogin], async function (req, res, next) {
   let {body} = req
-  studentController.insert(body)
+  await studentController.insert(body)
   res.redirect('/student')
 });
 

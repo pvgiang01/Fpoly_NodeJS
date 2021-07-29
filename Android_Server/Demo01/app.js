@@ -7,6 +7,8 @@ require('dotenv').config()
 const session = require('express-session')
 const mongoose = require('mongoose');
 require('./models/userModel')
+require('./models/clazzModel')
+require('./models/studentModel')
 
 
 
@@ -42,9 +44,12 @@ hbs.registerHelper('formatDate', function(a,t){
 })
 
 hbs.registerHelper('getClazzName', function (clazzId,clazz,t) {
-  return clazz.filter(item => item.id == clazzId)[0].name
+  return clazz.filter(item => item._id.toString() == clazzId.toString())[0].name
 })
 
+hbs.registerHelper('soThuTu', function (v,t) {
+  return v + 1
+})
 
 app.use(logger('dev'));
 app.use(express.json());
