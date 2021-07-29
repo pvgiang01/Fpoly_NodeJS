@@ -53,3 +53,28 @@ export const updateNews = (news) => {
   } catch (error) {    
   }
 }
+
+export const uploadImg = async (img) => {
+  if (!img) return;
+  const {uri, fileName} = img
+  const ref = firebase.storage().ref().child(fileName)
+
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        resolve(xhr.response);
+    };
+    xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+    };
+    xhr.responseType = "blob";
+    xhr.open("GET", uri, true);
+    xhr.send(null);
+  });
+
+  let mimeString = uri.split(':')[1]
+
+  const snapshot = await ref.put(blob, {contentType: mimeString})
+  const url = await snapshot.ref.getDownloadURL()
+  return url;
+}

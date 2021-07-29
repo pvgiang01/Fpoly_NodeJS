@@ -1,108 +1,170 @@
 import React, {useState, useContext} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Modal,
-  Pressable,
-  FlatList,
-  TextInput,
+import {Text,View,StyleSheet,Modal,Pressable, FlatList,
+  TextInput, Image
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {NewsContext} from '../NewsContext';
 import {AccountContext} from '../../account/AccountContext';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
+
 
 export const NewsFormScreen = props => {
-  const {navigation} = props;
-  const {news, categories, onAddNew} = useContext(NewsContext);
+  const {navigation, route} = props;
+  const {news, categories, onAddNew, upload} = useContext(NewsContext);
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [images, setImages] = useState('');
+  const [title, setTitle] = useState(route?.params?.post ? route.params.post.title : '' );
+  const [content, setContent] = useState(route?.params?.post ? route.params.post.content : '');
+  const [images, setImages] = useState(null);
+  const [imageURL, setImageURL] = useState(route?.params?.post ? route.params.post.images : null)
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const [dateTimeModalVisible, setdateTimeModalVisible] = useState(false)
-  const [dateTimeValue, setDateTimeValue] = useState(null)
+  const [dateTimeModalVisible, setdateTimeModalVisible] = useState(false);
+  const [dateTimeValue, setDateTimeValue] = useState(route?.params?.post ? route.params.post.created : null);
 
   const onSave = () => {
     let post = {
       id: 1000,
-      images:
-        'https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg',
+      images: imageURL,     
       title: title,
       content: content,
       category: {
-          id: selectedCategory.id,
-          name: selectedCategory.name
+        id: selectedCategory.id,
+        name: selectedCategory.name,
       },
-      created: dateTimeValue
+      created: dateTimeValue,
     };
     onAddNew(post);
     setTitle('');
     setContent('');
-    navigation.navigate('NewsListScreen')
+    navigation.navigate('NewsListScreen');
   };
 
-  console.log(dateTimeValue)
+  const displayDateTime = date => {
+    console.log('====>',date);
+    if (!date) {
+      date = new Date();
+    } else {
+      if (!(date instanceof Date)) {
+        date = new Date(date.toDate())
+      }      
+    }    
+    let month = date.getMonth() + 1;
+    month = month.toString().length == 1 ? '0' + month : month;
+    let year = date.getFullYear();
+    let day =
+      date.getDate().toString().length == 1
+        ? '0' + date.getDate().toString()
+        : date.getDate().toString();
+    return day + '/' + month + '/' + year;
+  };
+
+  const onTakePhoto = () => {
+    let options = {
+      maxHeight: 250,
+      maxWidth: 350,
+      saveToPhotos: true
+    }
+    launchCamera(options, async (res) => {
+      if (res.assets) {
+        setImages(res.assets[0])
+        const url = await upload(res.assets[0])
+        setImageURL(url)
+      } else {
+        console.log('>>>>>launchCamera error')
+      }
+    })
+  }
 
   return (
     <>
-      <Text style={styles.text}>News Form Screen</Text>
-      <TextInput
-        value={title}
-        onChangeText={setTitle}
-        multiline={true}
-        numberOfLines={5}
-        style={styles.textInput}
-      />
-      <TextInput
-        value={content}
-        onChangeText={setContent}
-        multiline={true}
-        numberOfLines={5}
-        style={styles.textInput}
-      />
-      <Picker
-        selectedValue={selectedCategory}
-        onValueChange={(itemValue, itemIndex) =>
-          setSelectedCategory(itemValue)
-        }>
-        {categories.map(item => (
-          <Picker.Item key={item.key} label={item.name} value={item} />
-        ))}
-      </Picker>
+      <View style={styles.formContainer}>
+        <Text style={styles.text}>News Form Screen</Text>
+        <TextInput
+          value={title}
+          onChangeText={setTitle}
+          multiline={true}
+          numberOfLines={5}
+          style={styles.textInput}
+        />
+        <TextInput
+          value={content}
+          onChangeText={setContent}
+          multiline={true}
+          numberOfLines={5}
+          style={styles.textInput}
+        />
+        <View>
+          <Picker
+            selectedValue={selectedCategory}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedCategory(itemValue)
+            }>
+            {categories.map(item => (
+              <Picker.Item
+                style={{fontSize: 25}}
+                key={item.key}
+                label={item.name}
+                value={item}
+              />
+            ))}
+          </Picker>
+        </View>
 
-        <Pressable
-          style={styles.buttonContainer}
-          onPress={() => setdateTimeModalVisible(true)}>
-          <Text style={styles.text}>Choose date</Text>
+        <Pressable onPress={() => setdateTimeModalVisible(true)}>
+          <Text style={styles.dateSelection}>
+            Choose date: {displayDateTime(dateTimeValue)}
+          </Text>
         </Pressable>
 
         <DateTimePickerModal
-            isVisible={dateTimeModalVisible}
-            mode="date"
-            onConfirm={(date) => { setDateTimeValue(date); setdateTimeModalVisible(false);}}
-            onCancel={() => setdateTimeModalVisible(false)}
+          isVisible={dateTimeModalVisible}
+          mode="date"
+          onConfirm={date => {
+            setDateTimeValue(date);
+            setdateTimeModalVisible(false);
+          }}
+          onCancel={() => setdateTimeModalVisible(false)}
         />
 
-      <View style={styles.buttons}>
-        <Pressable
-          style={styles.buttonContainer}
-          onPress={() => navigation.navigate('NewsListScreen')}>
-          <Text style={styles.text}>Cancel</Text>
+        <Pressable onPress={onTakePhoto}>
+          <Text style={styles.dateSelection}>Take photo</Text>
         </Pressable>
-        <Pressable style={styles.buttonContainer} onPress={onSave}>
-          <Text style={styles.text}>Save</Text>
-        </Pressable>
+
+        <Image
+          source={{uri: imageURL}}
+          style={{width: 200, height: 200, resizeMode: 'cover'}}
+        />  
+
+        <View style={styles.buttons}>
+          <Pressable
+            style={styles.buttonContainer}
+            onPress={() => navigation.navigate('NewsListScreen')}>
+            <Text style={styles.text}>Cancel</Text>
+          </Pressable>
+          <Pressable style={styles.buttonContainer} onPress={onSave}>
+            <Text style={styles.text}>Save</Text>
+          </Pressable>
+        </View>
       </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  dateSelection: {
+    fontSize: 25,
+  },
+  formContainer: {
+    backgroundColor: '#809c97',
+    margin: 16,
+    padding: 16,
+    // alignItems: 'center'
+  },
   buttons: {
+    marginTop: 16,
     flexDirection: 'row',
   },
   modalTitle: {
@@ -110,10 +172,11 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   textInput: {
-    width: '80%',
+    width: '100%',
     height: 50,
     backgroundColor: 'white',
-    margin: 16,
+    marginTop: 16,
+    marginBottom: 16,
     fontSize: 30,
   },
   modal: {

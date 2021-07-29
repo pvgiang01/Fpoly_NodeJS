@@ -26,7 +26,7 @@ export const NewsListScreen = props => {
     return (
       <View style={styles.container}>
         <Pressable
-          onPress={() => navigation.navigate('NewsDetailScreen', {post: item})}>
+          onPress={() => navigation.navigate('NewsFormScreen', {post: item})}>
           <Text style={styles.text}>{item.title}</Text>
         </Pressable>
       </View>
