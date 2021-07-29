@@ -2,8 +2,8 @@ const userService = require('../services/user')
 
 
 
-exports.login = function login(username, password) {
-    const user = userService.login(username)
+exports.login = async function login(username, password) {
+    const user = await userService.login(username)
     if (!user) {
         return false
     }

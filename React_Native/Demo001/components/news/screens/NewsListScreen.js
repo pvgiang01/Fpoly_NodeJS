@@ -8,12 +8,13 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import {NewsContext} from '../NewsContext';
-import { AccountContext } from '../../account/AccountContext';
+import {AccountContext} from '../../account/AccountContext';
 
 export const NewsListScreen = props => {
   const {navigation} = props;
-  const {data, onAddNew} = useContext(NewsContext);
+  const {news, categories, onAddNew} = useContext(NewsContext);
   const {onLogout} = useContext(AccountContext);
   const [visible, setVisible] = useState(false);
 
@@ -34,16 +35,17 @@ export const NewsListScreen = props => {
 
   const onSave = () => {
     let post = {
-      id: 1000, 
-      images: 'https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg', 
-      title: title, 
-      content: content
+      id: 1000,
+      images:
+        'https://cdn.tuoitre.vn/thumb_w/586/2021/7/22/pfizer-16269171195602110386169.jpg',
+      title: title,
+      content: content,
     };
     onAddNew(post);
     setVisible(false);
-    setTitle('')
-    setContent('')
-  }
+    setTitle('');
+    setContent('');
+  };
 
   // dung FlatList
   return (
@@ -52,70 +54,36 @@ export const NewsListScreen = props => {
       <View>
         <Pressable
           style={styles.buttonContainer}
-          onPress={() => setVisible(true)}>
+          onPress={() => navigation.navigate('NewsFormScreen')}>
           <Text style={styles.text}>Add new</Text>
         </Pressable>
-        <Pressable
-          style={styles.buttonContainer}
-          onPress={() => onLogout()}>
+        <Pressable style={styles.buttonContainer} onPress={() => onLogout()}>
           <Text style={styles.text}>Log Out</Text>
         </Pressable>
       </View>
       <FlatList
-        data={data}
+        data={news}
         renderItem={renderItem}
         keyExtractor={item => item.key}
       />
-
-      <Modal animationType="slide" transparent={true} visible={visible}>
-        <View style={styles.modal}>
-          <Text style={styles.modalTitle}>Add new post</Text>
-          <TextInput
-            value={title}
-            onChangeText={setTitle}
-            multiline={true}
-            numberOfLines={5}
-            style={styles.textInput}
-          />
-          <TextInput
-            value={content}
-            onChangeText={setContent}
-            multiline={true}
-            numberOfLines={5}
-            style={styles.textInput}
-          />
-          <View style={styles.buttons}>
-            <Pressable
-              style={styles.buttonContainer}
-              onPress={() => setVisible(false)}>
-              <Text style={styles.text}>Cancel</Text>
-            </Pressable>
-            <Pressable
-              style={styles.buttonContainer}
-              onPress={onSave}>
-              <Text style={styles.text}>Save</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  buttons:{
-    flexDirection: 'row'
+  buttons: {
+    flexDirection: 'row',
   },
   modalTitle: {
     fontSize: 30,
-    color: 'white'
+    color: 'white',
   },
-  textInput:{
+  textInput: {
     width: '80%',
     height: 50,
     backgroundColor: 'white',
     margin: 16,
-    fontSize: 30
+    fontSize: 30,
   },
   modal: {
     backgroundColor: '#3285a8',
@@ -132,7 +100,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     alignItems: 'center',
-    paddingTop: 24
+    paddingTop: 24,
   },
   buttonContainer: {
     width: '50%',
@@ -147,4 +115,3 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
 });
-

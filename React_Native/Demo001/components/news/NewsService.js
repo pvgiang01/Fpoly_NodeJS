@@ -1,17 +1,31 @@
 import * as firebase from 'firebase';
 
-export const getAllNews = (setData) => {
+export const getAllNews = (cb) => {
     firebase
       .firestore()
       .collection('news')
       .onSnapshot(res => {
         let arr = [];
         res.forEach(element => {
-          const {id, images, title, content} = element.data();
-          arr.push({id, images, title, content, key: element.id});
+          const {id, images, title, content, created} = element.data();
+          arr.push({id, images, title, content, created, key: element.id});
         });
-        setData(arr);
+        cb(arr);
       });
+}
+
+export const getAllCategories = (cb) => {
+  firebase
+    .firestore()
+    .collection('categories')
+    .onSnapshot(res => {
+      let arr = [];
+      res.forEach(element => {
+        const {id, name} = element.data();
+        arr.push({id, name, key: element.id});
+      });
+      cb(arr);
+    });
 }
 
 export const deleteNews = async (key) => {

@@ -20,9 +20,9 @@ router.get("/login", function (req, res, next) {
 /*
   submit form login
 */
-router.post("/", function (req, res, next) {
+router.post("/", async function (req, res, next) {
   const { username, password } = req.body;
-  const check = userController.login(username, password);
+  const check = await userController.login(username, password);
   if (check) {
     const access_token = jwt.sign(
       { id: 1, username: "admin" },

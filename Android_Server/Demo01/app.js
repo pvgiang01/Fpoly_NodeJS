@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config()
 const session = require('express-session')
+const mongoose = require('mongoose');
+require('./models/userModel')
 
 
 
@@ -18,6 +20,9 @@ var studentRouter = require('./routes/student');
 
 
 var app = express();
+mongoose.connect(process.env.MONGODB, {useNewUrlParser: true, useUnifiedTopology: true})
+.then(() => console.log('>>>>> DB connected!!!!!'))
+.catch((err) => console.log('>>>>> DB error!!!!!', err))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
